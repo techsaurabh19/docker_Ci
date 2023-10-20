@@ -1,13 +1,8 @@
 # syntax=docker/dockerfile:1
 
-FROM eclipse-temurin:17-jdk-jammy
-
+FROM node:18-alpine
 WORKDIR /app
-
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
-RUN ./mvnw dependency:resolve
-
-COPY src ./src
-
-CMD ["./mvnw", "spring-boot:run"]
+COPY . .
+RUN yarn install --production
+CMD ["node", "src/index.js"]
+EXPOSE 3000
